@@ -1,0 +1,52 @@
+groups:
+- name: basic_alert_rules
+  rules:
+    # High CPU Usage Alert
+    - alert: HighCPUUsage
+      expr: 100 - (avg by (cpu) (irate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 20
+      for: 30s
+      labels:
+        severity: critical
+      annotations:
+        description: "CPU usage is above 20% for more than 30 seconds."
+        value: "{{ $value }}"  # Capture the current value
+
+    # High Memory Usage Alert        
+    - alert: HighMemoryUsage
+      expr: (node_memory_free_bytes + node_memory_inactive_bytes) / node_memory_total_bytes < 0.2
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        description: "Available memory is below 20%."
+        value: "{{ $value }}"  # Capture the current value
+
+    # High Disk Usage Alert
+    - alert: HighDiskUsage
+      expr: (node_filesystem_avail_bytes{fstype!="tmpfs"} / node_filesystem_size_bytes{fstype!="tmpfs"}) < 0.3
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        description: "Disk usage is above 70%."
+        value: "{{ $value }}"  # Capture the current value
+
+    # High Network Traffic Alert
+    - alert: HighNetworkTraffic
+      expr: rate(node_network_receive_bytes_total[1m]) > 100000
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        description: "Network traffic received is greater than 100KB per second."
+        value: "{{ $value }}"  # Capture the current value
+
+    # Service Down Alert    
+    - alert: ServiceDown
+      expr: probe_success == 0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        description: "The service is down."
+        value: "{{ $value }}"  # Capture the current value

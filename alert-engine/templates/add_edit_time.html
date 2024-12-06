@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Smart Alert Service</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="../../static/assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../static/css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                <div class="sidebar-heading border-bottom bg-light">Smart Alert Service</div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/view/rule">Rules</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/view/correlations">Correlation Rules</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/view/time">Time-Based Rules</a>
+                </div>
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                  <div class="container-fluid">
+                      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                          <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                              <li class="nav-item active"><a class="nav-link" href="/add/correlation">Add New Time-Based Rule</a></li>
+                          </ul>
+                      </div>
+                  </div>
+              </nav>                 
+                <!-- Page content-->
+                <div class="container-fluid">
+                    <h1 class="mt-4">Smart Alert Config:  Edit/Add Time-Based Rule</h1>
+                    <p>LUpdate Time-Based rule details.</p>
+
+                    <!-- Success Message -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ 'warning' if category == 'warning' else 'success' }} alert-dismissible fade show" role="alert">
+                                    <strong>{{ message }}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label class="form-label" for="alert_name">Alert Name:</label>
+                            <input class="form-control" type="text" name="alert_name" id="alert_name" value="{{ alert_name }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="peak_hours_start">Peak Hours Start:</label>
+                            <input class="form-control" type="time" name="peak_hours_start" id="peak_hours_start" value="{{ peak_hours_start }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="peak_hours_end">Peak Hours End:</label>
+                            <input class="form-control" type="time" name="peak_hours_end" id="peak_hours_end" value="{{ peak_hours_end }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="peak_hours_threshold">Peak Hours Threshold:</label>
+                            <input class="form-control" type="text" name="peak_hours_threshold" id="peak_hours_threshold" value="{{ peak_hours_threshold }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="off_hours_start">Off Hours Start:</label>
+                            <input class="form-control" type="time" name="off_hours_start" id="off_hours_start" value="{{ off_hours_start }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="off_hours_end">Off Hours End:</label>
+                            <input class="form-control" type="time" name="off_hours_end" id="off_hours_end" value="{{ off_hours_end }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="off_hours_threshold">Off Hours Threshold:</label>
+                            <input class="form-control" type="text" name="off_hours_threshold" id="off_hours_threshold" value="{{ off_hours_threshold }}">
+                        </div>
+                        
+                            
+                            <input type="submit" class="btn btn-primary" value="{{ action }} Save Time-Based Rule">
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="../../static/js/scripts.js"></script>
+    </body>
+</html>
+

@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 5s  # Set the scrape interval to 5 seconds for quick feedback
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:9100']  # Scrape Node Export itself
+      - targets: ['host.docker.internal:9200']  # The port where your Python metrics are exposed
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['host.docker.internal:6000']  # Flask app endpoint for alerts
+        - targets: ['host.docker.internal:6001']  # Flask app endpoint for alerts
+
+rule_files:
+  - "/etc/prometheus/alert_rules.yml"  # Path to your alert rules file
